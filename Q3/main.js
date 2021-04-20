@@ -1,15 +1,40 @@
-// JavaScript Document
 
-let main = document.querySelectorAll('main');
-let submitButton = document.querySelector('input[type="submit"]');
-let body = document.querySelector('body'); 
+let button = document.getElementById('button');
+let ul = document.getElementById('toDoList');
+//use event handler property to trigger addToList when the button is created
+button.onclick = addToList;
 
-submitButton.addEventListener('click', function(e) { 
-  e.preventDefault();  
-  let personName = document.querySelector("body > div > main > form > input[type=text]:nth-child(1)").value; 
-  let para = document.createElement('p'); 
-  para.innerHTML = '<h3>Hey there ' + personName + '! Thanks for stopping by!</h3>'; 
-  main[0].appendChild(para);
-  body.setAttribute('class', 'meow'); 
-  console.log('=^..^='); 
-}); 
+
+//function to add items to the to do list
+function addToList() {
+   item = document.getElementById('toDo').value;
+  let li = document.createElement('li');
+  li.textContent = item; 
+  let checkBox = document.createElement('input'); 
+  checkBox.setAttribute('type', 'checkbox'); 
+  let button = document.createElement('button'); 
+  button.innerHTML = "Delete";
+  button.setAttribute("class", "delete");
+  li.appendChild(checkBox);
+  li.appendChild(button);
+  ul.appendChild(li); 
+
+  checkBox.onchange = checkItem;
+  button.onclick = deleteItem; 
+}
+
+ function checkItem(e) {
+
+   let addedItem = e.target.closest('li');
+   let parentItem = addedItem.parentNode; 
+   addedItem.classList.toggle('checked');
+   parentItem.appendChild(addedItem);
+}
+
+ function deleteItem(e) {
+    let deleted = e.target.closest('li'); 
+    deleted.remove(); 
+  }
+
+
+
